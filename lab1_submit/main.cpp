@@ -40,6 +40,17 @@ bool checkResults(uchar4* rgba, uchar3* grb, int size) {
     return correct;
 }
 
+void convertGRB2RGBA2(uchar3* grb, uchar4* rgba, int width, int height) {
+    for (int x=0; x<width; ++x) {
+    	for (int y=0; y<height; ++y) {	
+	    rgba[width * y + x].x = grb[width * y + x].y;
+	    rgba[width * y + x].y = grb[width * y + x].x;
+	    rgba[width * y + x].z = grb[width * y + x].z;
+	    rgba[width * y + x].w = 255;
+	}
+    }
+}
+
 void convertGRB2RGBA(uchar3* grb, uchar4* rgba, int width, int height) {
     for (int x=0; x<width; ++x) {
     	for (int y=0; y<height; ++y) {	
@@ -71,7 +82,8 @@ int main() {
 
     auto t1 = std::chrono::high_resolution_clock::now();
     for (int i=0; i<EXPERIMENT_ITERATIONS; ++i) {    
-	convertGRB2RGBA(h_grb, h_rgba, WIDTH, HEIGHT);
+        //convertGRB2RGBA(h_grb, h_rgba, WIDTH, HEIGHT);
+        convertGRB2RGBA2(h_grb, h_rgba, WIDTH, HEIGHT);
     }
     auto t2 = std::chrono::high_resolution_clock::now();
 
