@@ -5,7 +5,7 @@
 #define WIDTH 3840
 #define HEIGHT 2160
 
-#define EXPERIMENT_ITERATIONS 1
+#define EXPERIMENT_ITERATIONS 100
 
 typedef unsigned char uchar;
 
@@ -30,31 +30,23 @@ bool checkResults(uchar4* rgba, uchar3* grb, int size) {
 
     bool correct = true;
 
-    for (int i=0; i < size; ++i) {
+    for (int i=0; i < size; ++i) {        
         correct &= rgba[i].x == grb[i].y;
         correct &= rgba[i].y == grb[i].x;
         correct &= rgba[i].z == grb[i].z;
-        correct &= rgba[i].w == 255;
+        correct &= rgba[i].w == 255;        
     }
 
     return correct;
 }
 
 void convertGRB2RGBA2(uchar3* grb, uchar4* rgba, int width, int height) {
-    for (int x=0; x<width; ++x) {
-        for (int y=0; y<height; ++y) {	
-            if (y < 10 && x <2){
-                printf("height%d \n", height);
-                printf("width %d \n", width);
-                printf("y %d, x %d \n", x,y);
-                printf("final %d \n", width * y + x);                
-            }
-            rgba[width * y + x].x = grb[width * y + x].y;
-            rgba[width * y + x].y = grb[width * y + x].x;
-            rgba[width * y + x].z = grb[width * y + x].z;
-            rgba[width * y + x].w = 255;
-        }
-    }    
+    for(int x = 0; x < width * height; x++){
+        rgba[x].x = grb[x].y;
+        rgba[x].y = grb[x].x;
+        rgba[x].z = grb[x].z;
+        rgba[x].w = 255;
+    }                
 }
 
 void convertGRB2RGBA(uchar3* grb, uchar4* rgba, int width, int height) {
