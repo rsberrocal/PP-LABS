@@ -10,10 +10,10 @@
 typedef unsigned char uchar;
 
 struct _uchar3 {
-    uchar x;
-    uchar y;
-    uchar z;
-};
+uchar x;
+uchar y;
+uchar z;
+}__attribute__((aligned (4)));
 
 using uchar3 = _uchar3;
 
